@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Bao - Robotics Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            padding: 80px 20px 60px;
+        }
+        
+        header h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInDown 1s;
+        }
+        
+        header p {
+            font-size: 1.4em;
+            opacity: 0.95;
+            animation: fadeInUp 1s;
+        }
+        
+        .social-links {
+            margin-top: 30px;
+            animation: fadeIn 1.5s;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.8em;
+            margin: 0 15px;
+            text-decoration: none;
+            transition: transform 0.3s;
+            display: inline-block;
+        }
+        
+        .social-links a:hover {
+            transform: translateY(-5px);
+        }
+        
+        section {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            margin: 40px 0;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s;
+        }
+        
+        section h2 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .project-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 35px;
+            margin: 30px 0;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+        
+        .project-card h3 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .project-card p {
+            color: #555;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+        
+        .features {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .features ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .features li {
+            padding: 10px 0;
+            font-size: 1.05em;
+        }
+        
+        .features li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 30px;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 1.05em;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .skill-item {
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .skill-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .skill-item i {
+            font-size: 3em;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .skill-item h3 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        .skill-item p {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 50px 20px;
+        }
+        
+        footer h3 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 1.1em;
+            transition: opacity 0.3s;
+        }
+        
+        footer a:hover {
+            opacity: 0.8;
+        }
+        
+        .video-container {
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.5em; }
+            header p { font-size: 1.1em; }
+            section { padding: 30px 20px; }
+            section h2 { font-size: 2em; }
+            .project-card h3 { font-size: 1.6em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>👋 Hi, I'm Thanh Bao</h1>
+            <p>Robotics Engineer | ROS2 Developer | Computer Vision Enthusiast</p>
+            <div class="social-links">
+                <a href="https://github.com/Tranthanhbao198" target="_blank" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="mailto:your.email@example.com" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://linkedin.com/in/your-profile" target="_blank" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+        </header>
+
+        <section id="projects">
+            <h2><i class="fas fa-rocket"></i> Featured Projects</h2>
+            
+            <div class="project-card">
+                <h3>
+                    <i class="fas fa-hand-paper"></i>
+                    Dual UR5 Hand Teleoperation System
+                </h3>
+                
+                <p><strong>Real-time hand gesture control for dual robotic arms using MediaPipe and ROS2.</strong></p>
+                
+                <p>An innovative teleoperation system that allows intuitive control of two UR5 robotic arms through hand gestures captured via webcam. The system uses MediaPipe for hand tracking and ROS2 for robot control, providing a natural and responsive interface for dual-arm manipulation.</p>
+                
+                <div class="tech-tags">
+                    <span class="tech-tag">ROS2 Humble</span>
+                    <span class="tech-tag">Python 3.10</span>
+                    <span class="tech-tag">MediaPipe</span>
+                    <span class="tech-tag">OpenCV</span>
+                    <span class="tech-tag">URDF</span>
+                    <span class="tech-tag">RViz</span>
+                    <span class="tech-tag">Computer Vision</span>
+                </div>
+
+                <div class="features">
+                    <p><strong>Key Features:</strong></p>
+                    <ul>
+                        <li>Hand tracking with 21 landmarks per hand using MediaPipe</li>
+                        <li>Real-time control loop at 50Hz with exponential smoothing</li>
+                        <li>3D visualization with detailed robot meshes in RViz</li>
+                        <li>Multiple control modes: Hand tracking, Keyboard, Automatic demo</li>
+                        <li>Independent dual arm control with mirrored hand mapping</li>
+                        <li>Pinch gesture for gripper control</li>
+                        <li>Complete documentation and setup guides</li>
+                    </ul>
+                </div>
+
+                <div class="video-container">
+                    <p><strong>📹 Demo Video:</strong></p>
+                    <video controls>
+                        <source src="https://github.com/Tranthanhbao198/dual_arm_teleoperation-UR5/raw/main/demo/hand_tracking_demo.webm" type="video/webm">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <a href="https://github.com/Tranthanhbao198/dual_arm_teleoperation-UR5" class="btn" target="_blank">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+                <a href="https://github.com/Tranthanhbao198/dual_arm_teleoperation-UR5#readme" class="btn" target="_blank">
+                    <i class="fas fa-book"></i> Read Documentation
+                </a>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2><i class="fas fa-cogs"></i> Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <i class="fas fa-robot"></i>
+                    <h3>Robotics</h3>
+                    <p>ROS2 Humble<br>URDF & Xacro<br>TF2 Transforms<br>Robot Kinematics<br>Motion Planning</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-eye"></i>
+                    <h3>Computer Vision</h3>
+                    <p>MediaPipe<br>OpenCV<br>Hand Tracking<br>Image Processing<br>Real-time Vision</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-code"></i>
+                    <h3>Programming</h3>
+                    <p>Python 3.10<br>C++<br>Bash Scripting<br>Git Version Control<br>Linux (Ubuntu)</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-tools"></i>
+                    <h3>Tools & Platforms</h3>
+                    <p>RViz Visualization<br>Gazebo Simulation<br>GitHub<br>VS Code<br>Colcon Build</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2><i class="fas fa-user"></i> About Me</h2>
+            <p style="font-size: 1.15em; line-height: 1.8; color: #555;">
+                I'm a robotics engineer passionate about creating intuitive human-robot interaction systems. 
+                My work focuses on combining computer vision and robotics to develop natural control interfaces 
+                that make robots more accessible and easier to use.
+            </p>
+            <p style="font-size: 1.15em; line-height: 1.8; color: #555; margin-top: 20px;">
+                Currently specializing in ROS2 development, real-time control systems, and computer vision applications 
+                for robotics. Always excited to collaborate on innovative projects that push the boundaries of 
+                human-robot collaboration.
+            </p>
+        </section>
+
+        <footer>
+            <h3>📫 Let's Connect</h3>
+            <p>
+                <a href="mailto:your.email@example.com">
+                    <i class="fas fa-envelope"></i> Email
+                </a>
+                <a href="https://github.com/Tranthanhbao198" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="https://linkedin.com/in/your-profile" target="_blank">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+            </p>
+            <p style="margin-top: 30px; opacity: 0.9; font-size: 1.1em;">
+                <i class="fas fa-heart" style="color: #ff6b6b;"></i> Open to collaboration on robotics and computer vision projects!
+            </p>
+            <p style="margin-top: 20px; opacity: 0.7;">© 2025 Thanh Bao. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
