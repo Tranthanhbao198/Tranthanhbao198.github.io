@@ -855,7 +855,12 @@
                   <p>An innovative teleoperation system enabling intuitive control of two UR5 robotic arms through hand gestures captured via webcam. The system leverages MediaPipe for robust hand tracking and ROS2 for reliable robot control.</p>
                   <p></p>
 
-                  <img class="img-fluid d-block mx-auto" src="https://via.placeholder.com/600x400.png?text=Add+Demo+GIF+Here" alt="">
+                  <h5>Live Demonstration</h5>
+                  <video class="img-fluid d-block mx-auto" width="700" controls>
+                    <source src="assets/hand_tracking/hand_tracking_demo.webm" type="video/webm">
+                    Your browser does not support the video tag.
+                  </video>
+                  <p class="text-center"><em>Real-time hand gesture control of dual UR5 robotic arms</em></p>
                   <p></p>
 
                   <h4>Motivation</h4>
@@ -879,11 +884,15 @@
 
                   <h4>Results</h4>
                   <ul>
-                    <li>Achieved responsive real-time control at 50Hz</li>
-                    <li>Successfully demonstrated coordinated dual-arm manipulation tasks</li>
-                    <li>System proved robust across different users and environments</li>
+                    <li><strong>Control frequency:</strong> 50Hz real-time control loop</li>
+                    <li><strong>Latency:</strong> Low-latency hand tracking with exponential smoothing</li>
+                    <li><strong>Gesture recognition:</strong> 21 landmarks per hand for precise control</li>
+                    <li><strong>Dual-arm coordination:</strong> Intelligent mirrored mapping for intuitive bimanual manipulation</li>
+                    <li><strong>Gripper control:</strong> Pinch gesture detection for object grasping</li>
+                    <li><strong>Multiple control modes:</strong> Hand tracking, keyboard, and automatic demo modes</li>
+                    <li><strong>Visualization:</strong> Real-time 3D robot visualization in RViz</li>
+                    <li><strong>Robustness:</strong> Proven across different users and lighting conditions</li>
                   </ul>
-                  <p><em>Add demonstration videos and user study results here</em></p>
 
                   <ul class="list-inline">
                     <p class="item-intro text-muted"><a class="boxed" href="https://github.com/Tranthanhbao198/dual_arm_teleoperation-UR5" target="_blank"><font color="red"><b>GitHub Repository</b></font></a></p>
@@ -991,7 +1000,12 @@
                   <p>Research internship project training dual Franka Emika Panda robot arms to perform coordinated bottle cap removal task using Proximal Policy Optimization (PPO) in NVIDIA Isaac Gym simulator.</p>
                   <p></p>
 
-                  <img class="img-fluid d-block mx-auto" src="https://via.placeholder.com/600x400.png?text=Add+Demo+GIF+Here" alt="">
+                  <h5>Trained Policy Demonstration</h5>
+                  <video class="img-fluid d-block mx-auto" width="700" controls>
+                    <source src="assets/dual_franka/dual_franka_demo.webm" type="video/webm">
+                    Your browser does not support the video tag.
+                  </video>
+                  <p class="text-center"><em>Dual Franka arms performing coordinated bottle cap removal using learned PPO policy</em></p>
                   <p></p>
 
                   <h4>Motivation</h4>
@@ -1009,21 +1023,25 @@
                     <li>14-dimensional continuous action space for dual-arm control</li>
                   </ul>
 
-                  <h5>Training</h5>
+                  <h5>Training Environment</h5>
                   <ul>
-                    <li>GPU-accelerated physics simulation with 4096+ parallel environments in Isaac Gym</li>
-                    <li>Multi-stage reward shaping: reach → grasp → lift → open cap</li>
-                    <li>Collision avoidance and orientation constraints for safe manipulation</li>
+                    <li><strong>Simulator:</strong> NVIDIA Isaac Gym (GPU-accelerated physics)</li>
+                    <li><strong>Parallel environments:</strong> 4096+ simultaneous simulations</li>
+                    <li><strong>Multi-stage reward shaping:</strong> reach → grasp → lift → open cap</li>
+                    <li><strong>Safety constraints:</strong> Collision avoidance and orientation limits</li>
                   </ul>
                   <p></p>
 
                   <h4>Results</h4>
                   <ul>
-                    <li>Successfully learned coordinated dual-arm manipulation policy</li>
-                    <li>Achieved high success rate in bottle cap removal task</li>
-                    <li>Demonstrated robust performance across different initial conditions</li>
+                    <li><strong>Policy learning:</strong> Successfully learned coordinated dual-arm manipulation policy through PPO</li>
+                    <li><strong>Task completion:</strong> High success rate in bottle cap removal task</li>
+                    <li><strong>Generalization:</strong> Robust performance across different initial conditions</li>
+                    <li><strong>State space:</strong> 42-dimensional observation (robot state + object poses)</li>
+                    <li><strong>Action space:</strong> 14-dimensional continuous control (7 DOF per arm)</li>
+                    <li><strong>Training efficiency:</strong> GPU-accelerated parallel simulation enables rapid policy iteration</li>
+                    <li><strong>Coordination:</strong> Learned implicit coordination between arms without explicit communication</li>
                   </ul>
-                  <p><em>Add learning curves, success rates, and demonstration videos here</em></p>
 
                   <ul class="list-inline">
                     <p class="item-intro text-muted"><a class="boxed" href="https://github.com/Tranthanhbao198/dual_franka_ppo" target="_blank"><font color="red"><b>GitHub Repository</b></font></a></p>
