@@ -931,34 +931,93 @@
                   <p></p>
 
                   <h4>Brief Description</h4>
-                  <p>Developed a comprehensive mobile robot system capable of detecting, tracking, and following a moving human in real-time. The system integrates laser-based person detection with Kalman filtering for robust tracking under occlusion and sensor noise.</p>
+                  <p>Developed a comprehensive DATMO (Detection And Tracking of Moving Objects) system for mobile robots. The system uses laser scan data to detect and track humans in real-time, enabling autonomous human-following behavior with robust performance under occlusion and sensor noise.</p>
                   <p></p>
 
-                  <img class="img-fluid d-block mx-auto" src="https://via.placeholder.com/600x400.png?text=Add+Demo+GIF+Here" alt="">
+                  <h5>Live Demonstration</h5>
+                  <video class="img-fluid d-block mx-auto" width="700" controls>
+                    <source src="assets/followme/followme.MOV" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <p class="text-center"><em>Mobile robot autonomously following a moving person using laser-based detection and Kalman filter tracking</em></p>
                   <p></p>
 
                   <h4>Motivation</h4>
-                  <p>Human-following robots have applications in healthcare, logistics, and service robotics. The challenge lies in maintaining robust tracking under occlusion and sensor noise while ensuring safe navigation.</p>
+                  <p>Human-following robots have applications in healthcare (assistive robotics), logistics (smart carts), and service robotics (tour guides). The challenge lies in maintaining robust tracking under occlusion and sensor noise while ensuring safe navigation in dynamic environments.</p>
                   <p></p>
 
                   <h4>Approach</h4>
-                  <h5>Person Detection</h5>
-                  <p>Developed laser clustering algorithm to detect and extract human leg patterns from laser scan data, publishing target pose as ROS topic.</p>
 
-                  <h5>State Estimation</h5>
-                  <p>Implemented Kalman filter with data association algorithm for robust tracking, producing smooth trajectories resilient to occlusion and sensor noise.</p>
+                  <h5>1. Motion Detection</h5>
+                  <p>Implemented background subtraction algorithm to detect dynamic objects in the environment:</p>
+                  <ul>
+                    <li><strong>Background storage:</strong> Captures static environment when robot is stationary</li>
+                    <li><strong>Dynamic threshold:</strong> Identifies moving objects by comparing current scan with background</li>
+                    <li><strong>Motion filtering:</strong> Distinguishes between robot's own motion and external movement</li>
+                  </ul>
 
-                  <h5>Motion Control</h5>
-                  <p>Converted tracked poses into safe velocity commands with collision avoidance for smooth human-following behavior.</p>
+                  <h5>2. Laser-Based Clustering</h5>
+                  <p>Developed adaptive clustering algorithm to segment laser scan data:</p>
+                  <ul>
+                    <li><strong>Clustering threshold:</strong> 0.05m (adaptively adjusted based on distance)</li>
+                    <li><strong>Cluster properties:</strong> Computes size, center, and dynamic percentage for each cluster</li>
+                    <li><strong>Advanced clustering:</strong> Handles complex scenarios with variable cluster sizes</li>
+                  </ul>
+
+                  <h5>3. Leg Detection</h5>
+                  <p>Identifies human legs from clusters using geometric constraints:</p>
+                  <ul>
+                    <li><strong>Leg size:</strong> 0.05m - 0.25m (typical human leg width)</li>
+                    <li><strong>Leg pair validation:</strong> Distance between legs: 0.1m - 0.7m</li>
+                    <li><strong>Dynamic filtering:</strong> Prioritizes moving clusters to reduce false positives</li>
+                  </ul>
+
+                  <h5>4. Person Detection</h5>
+                  <p>Fuses leg pairs into person detections:</p>
+                  <ul>
+                    <li><strong>Geometric validation:</strong> Confirms leg pair geometry matches human walking pattern</li>
+                    <li><strong>Person position:</strong> Computed as midpoint between detected leg pairs</li>
+                    <li><strong>Moving person selection:</strong> Identifies most likely target based on motion</li>
+                  </ul>
+
+                  <h5>5. Kalman Filter Tracking</h5>
+                  <p>Implemented Kalman filter for robust state estimation:</p>
+                  <ul>
+                    <li><strong>State variables:</strong> Person position (x, y) in robot frame</li>
+                    <li><strong>Data association:</strong> Matches detections to tracked person using nearest-neighbor</li>
+                    <li><strong>Uncertainty management:</strong> Increases uncertainty during occlusion (0.5m - 1.0m)</li>
+                    <li><strong>Frequency tracking:</strong> Adjusts update rate (5Hz - 25Hz) based on tracking confidence</li>
+                  </ul>
+
+                  <h5>6. Obstacle Avoidance</h5>
+                  <p>Finds closest obstacle for collision-free navigation:</p>
+                  <ul>
+                    <li><strong>Safety margin:</strong> 0.25m robot radius + 0.3m goal offset</li>
+                    <li><strong>Real-time updates:</strong> Publishes closest obstacle position for motion planner</li>
+                  </ul>
+                  <p></p>
+
+                  <h4>Implementation Details</h4>
+                  <ul>
+                    <li><strong>Framework:</strong> ROS2 (Jazzy) with rclcpp</li>
+                    <li><strong>Sensor:</strong> 2D laser scanner (1100 beams max)</li>
+                    <li><strong>Visualization:</strong> RViz markers for field of view, motion, clusters, legs, persons, tracking</li>
+                    <li><strong>Publishers:</strong> Detection topic, tracking topic, closest obstacle topic</li>
+                    <li><strong>C++ implementation:</strong> Modular architecture with DATMO base class</li>
+                  </ul>
                   <p></p>
 
                   <h4>Results</h4>
                   <ul>
-                    <li>Successfully demonstrated autonomous human-following in dynamic environments</li>
-                    <li>Maintained tracking through brief occlusions</li>
-                    <li>Achieved safe navigation with collision-free following</li>
+                    <li><strong>Person detection:</strong> Successfully detects humans from laser scan leg patterns</li>
+                    <li><strong>Robust tracking:</strong> Maintains person tracking through brief occlusions using Kalman filter prediction</li>
+                    <li><strong>Motion detection:</strong> Distinguishes between static obstacles and moving persons</li>
+                    <li><strong>Adaptive uncertainty:</strong> Uncertainty grows during occlusion (0.5m → 1.0m), decreases with good observations</li>
+                    <li><strong>Real-time performance:</strong> Operates at laser scan frequency with low computational overhead</li>
+                    <li><strong>Safe navigation:</strong> Obstacle detection enables collision-free following behavior</li>
+                    <li><strong>Dynamic environments:</strong> Handles multiple moving objects, selects most likely target</li>
+                    <li><strong>Visualization:</strong> Comprehensive RViz visualization for debugging and monitoring</li>
                   </ul>
-                  <p><em>Add tracking accuracy metrics and demonstration videos here</em></p>
 
                   <ul class="list-inline">
                     <p class="item-intro text-muted"><a class="boxed" href="#"><font color="red"><b>GitHub Repository</b></font></a></p>
