@@ -473,7 +473,7 @@
                   <i class="fas fa-plus fa-3x"></i>
                 </div>
               </div>
-              <img class="img-fluid" src="https://via.placeholder.com/400x300.png?text=UAV+Tension+Estimation" alt="">
+              <img class="img-fluid" src="assets/uav/figure8/3DTrajectories.png" alt="UAV Tension Estimation">
             </a>
             <div class="portfolio-caption">
               <h4>Tension Estimation UAV-Slung Load</h4>
@@ -687,38 +687,136 @@
                   <p></p>
 
                   <h4>Brief Description</h4>
-                  <p>Advanced research project at GIPSA Lab focusing on real-time tension estimation for UAV-slung load systems. Implemented Newton-Euler dynamics modeling for small UAVs and developed an Extended Kalman Filter that fuses IMU and cable angle sensor data on embedded real-time hardware.</p>
+                  <p>Hardware-ready control framework for quadrotor UAVs transporting suspended payloads under realistic sensor noise. Integrates differential flatness planning, Extended Kalman Filter (EKF) sensor fusion, and Active Disturbance Rejection Control (ADRC) for robust trajectory tracking using only noisy IMU and cable angle measurements.</p>
                   <p></p>
 
-                  <img class="img-fluid d-block mx-auto" src="https://via.placeholder.com/600x400.png?text=Add+Demo+GIF+Here" alt="">
+                  <h5>Figure-8 Trajectory Demo</h5>
+                  <video class="img-fluid d-block mx-auto" width="600" controls>
+                    <source src="assets/uav/figure8/animation.webm" type="video/webm">
+                    Your browser does not support the video tag.
+                  </video>
+                  <p class="text-center"><em>Figure-8 (Lissajous) trajectory with ADRC controller</em></p>
                   <p></p>
 
                   <h4>Motivation</h4>
-                  <p>Real-time tension estimation is critical for safe UAV-slung load operations. Traditional methods struggle with the complex dynamics and sensor noise in these systems, creating a need for robust estimation approaches that can handle real-world conditions.</p>
+                  <p>Quadrotor UAVs with cable-suspended payloads face challenges including underactuated cable dynamics, time-varying tension forces, and parameter uncertainties. Real-time tension estimation is critical for safe operations, but traditional model-based methods require accurate models and struggle with sensor noise. This project develops a hardware-ready control and estimation framework that operates solely on noisy sensor measurements, mimicking real deployment conditions.</p>
                   <p></p>
 
                   <h4>Approach</h4>
-                  <h5>Dynamics Modeling</h5>
-                  <p>Developed Newton-Euler dynamics model for small UAV systems to capture the coupled dynamics between the UAV and slung load.</p>
 
-                  <h5>Sensor Fusion</h5>
-                  <p>Implemented Extended Kalman Filter (EKF) that fuses data from IMU and cable angle sensors for accurate tension estimation on embedded real-time hardware.</p>
+                  <h5>Known-Unknown Decomposition</h5>
+                  <p>Key innovation: decompose cable force into <strong>known</strong> nominal tension (from differential flatness) and <strong>unknown</strong> disturbances (estimated by Extended State Observer). This prevents naive ADRC from fighting against required tension, ensuring stability while rejecting model mismatch and external forces.</p>
 
-                  <h5>Control Development</h5>
+                  <h5>EKF-Based State Estimation</h5>
+                  <p>10-dimensional Extended Kalman Filter fuses noisy IMU position measurements (σ<sub>p</sub> = 30mm) and cable angle sensors (σ<sub>θ</sub> = 0.5°) to estimate:</p>
                   <ul>
-                    <li>Applied flatness-based Active Disturbance Rejection Control (ADRC) for trajectory tracking</li>
-                    <li>Benchmarked against PD and LQR controllers</li>
-                    <li>Currently developing Learning-MPC implementation for advanced comparison</li>
+                    <li>Quadrotor position and velocity</li>
+                    <li>Cable tension (primary target)</li>
+                    <li>Cable direction vector</li>
                   </ul>
+                  <p>EKF estimates replace unavailable true state in the control loop, providing realistic hardware-ready validation.</p>
+
+                  <h5>ESO-Augmented ADRC Controller</h5>
+                  <p>Extended State Observer (ESO) estimates total disturbance (model errors, external forces, parameter uncertainties) and cancels it via feedback. Controller operates solely on noisy EKF state estimates—never accesses ground truth.</p>
+                  <p></p>
+
+                  <img class="img-fluid d-block mx-auto" src="assets/uav/figure8/3DTrajectories.png" alt="3D Trajectory Tracking">
+                  <p class="text-center"><em>3D trajectory tracking: desired (blue) vs actual (red)</em></p>
                   <p></p>
 
                   <h4>Results</h4>
+
+                  <h5>Position Tracking Performance (Figure-8 Trajectory)</h5>
                   <ul>
-                    <li>Successfully implemented EKF on embedded real-time hardware</li>
-                    <li>ADRC demonstrated superior robustness compared to PD and LQR controllers</li>
-                    <li>Achieved real-time tension estimation with high accuracy</li>
+                    <li><strong>Duration:</strong> 12 seconds</li>
+                    <li><strong>RMSE X:</strong> 54.39 mm</li>
+                    <li><strong>RMSE Y:</strong> 64.08 mm</li>
+                    <li><strong>Total RMSE:</strong> <strong>85.92 mm</strong></li>
                   </ul>
-                  <p><em>Add quantitative results, plots, and comparison graphs here when available</em></p>
+                  <p>Controller uses only noisy EKF estimates (not true state), demonstrating realistic deployment performance.</p>
+
+                  <img class="img-fluid d-block mx-auto" src="assets/uav/figure8/PositionTracking.png" alt="Position Tracking">
+                  <p class="text-center"><em>Position tracking over time</em></p>
+                  <p></p>
+
+                  <h5>EKF State Estimation Accuracy</h5>
+                  <ul>
+                    <li><strong>Position RMSE:</strong> 21.4 mm (despite 30mm sensor noise)</li>
+                    <li><strong>Velocity RMSE:</strong> 0.266 m/s</li>
+                    <li><strong>Cable Tension RMSE:</strong> 0.0876 N (18.9% relative error)</li>
+                    <li><strong>Cable Direction Error:</strong> 0.0756</li>
+                  </ul>
+                  <p>EKF achieves <strong>sub-sensor-noise position accuracy</strong> (21.4mm vs 30mm sensor noise) through optimal sensor fusion, providing accurate state feedback for control.</p>
+
+                  <img class="img-fluid d-block mx-auto" src="assets/uav/figure8/CableTensionEstimation.png" alt="Cable Tension Estimation">
+                  <p class="text-center"><em>Cable tension estimation: true (blue), EKF (red), nominal (green), ESO (purple)</em></p>
+                  <p></p>
+
+                  <h5>Tension Estimation: Three Complementary Methods</h5>
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th>Method</th>
+                        <th>RMSE</th>
+                        <th>Purpose</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Nominal (Flatness)</td>
+                        <td><strong>5.03%</strong></td>
+                        <td>Feedforward control</td>
+                      </tr>
+                      <tr>
+                        <td>ESO (Indirect)</td>
+                        <td><strong>7.65%</strong></td>
+                        <td>ADRC validation</td>
+                      </tr>
+                      <tr>
+                        <td>EKF (Direct)</td>
+                        <td>18.9%</td>
+                        <td>Safety monitoring</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <img class="img-fluid d-block mx-auto" src="assets/uav/figure8/ADRCValidation.png" alt="ADRC Validation">
+                  <p class="text-center"><em>ADRC validation: disturbance observation and rejection</em></p>
+                  <p></p>
+
+                  <h5>Control Effort</h5>
+                  <ul>
+                    <li><strong>Mean thrust:</strong> 1.258 N (hover: 0.92 N)</li>
+                    <li><strong>Max thrust:</strong> 1.534 N (limit: 5.0 N)</li>
+                    <li><strong>Mean moment:</strong> 0.0168 N·m</li>
+                    <li><strong>Max roll:</strong> 19.05°</li>
+                    <li><strong>Max pitch:</strong> 17.52°</li>
+                  </ul>
+
+                  <img class="img-fluid d-block mx-auto" src="assets/uav/figure8/ControlInputs.png" alt="Control Inputs">
+                  <p class="text-center"><em>Control inputs: thrust and moments over time</em></p>
+                  <p></p>
+
+                  <img class="img-fluid d-block mx-auto" src="assets/uav/figure8/Attitude.png" alt="Attitude">
+                  <p class="text-center"><em>UAV attitude angles during trajectory tracking</em></p>
+                  <p></p>
+
+                  <h5>Point-to-Point Trajectory Demo</h5>
+                  <video class="img-fluid d-block mx-auto" width="600" controls>
+                    <source src="assets/uav/p2p/animation.webm" type="video/webm">
+                    Your browser does not support the video tag.
+                  </video>
+                  <p class="text-center"><em>Point-to-point minimum-snap trajectory</em></p>
+                  <p></p>
+
+                  <h5>Key Achievements</h5>
+                  <ul>
+                    <li><strong>Hardware-ready validation:</strong> Controller operates solely on noisy sensors (σ<sub>p</sub>=30mm, σ<sub>θ</sub>=0.5°), achieving 85.92mm tracking RMSE</li>
+                    <li><strong>Known-unknown decomposition:</strong> Prevents naive ADRC instability by separating nominal cable forces from disturbances</li>
+                    <li><strong>EKF sensor fusion:</strong> 21.4mm position accuracy despite 30mm sensor noise, enabling accurate state feedback</li>
+                    <li><strong>Multiple tension estimates:</strong> Nominal (5.03%), ESO (7.65%), EKF (18.9%) serve complementary roles</li>
+                    <li><strong>System parameters:</strong> Quadrotor mass: 0.0785 kg, Payload: 0.0465 kg, Cable: 1.0 m</li>
+                  </ul>
 
                   <ul class="list-inline">
                     <p class="item-intro text-muted"><a class="boxed" href="#"><font color="red"><b>GitHub Repository</b></font></a></p>
