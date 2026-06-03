@@ -675,8 +675,12 @@
                   <p>One operator must command a heterogeneous fleet — robot dogs and drones — from a single AR-glasses-style interface: issue task commands, watch live first-person video, and keep an eye on the whole fleet at once.</p>
                   <p></p>
 
-                  <img class="img-fluid d-block mx-auto" src="assets/fleetmind/cover.png" alt="FleetMind FPV HUD">
-                  <p class="text-center"><em>Synthetic first-person view with AR-style HUD, rendered by the project's own FPV server</em></p>
+                  <h5>Live Demonstration — Operator Console</h5>
+                  <video class="img-fluid d-block mx-auto" width="700" autoplay loop muted playsinline controls>
+                    <source src="assets/fleetmind/web_console.webm" type="video/webm">
+                    Your browser does not support the video tag.
+                  </video>
+                  <p class="text-center"><em>Web "AR glasses" console: bird's-eye map with live trails (left) and first-person MJPEG video with AR HUD (right) while three robots patrol</em></p>
                   <p></p>
 
                   <h4>Approach</h4>
@@ -691,6 +695,14 @@
                     <li><strong>Operator console:</strong> web "AR glasses" (rosbridge + roslibjs) with a bird's-eye map, live MJPEG first-person video per robot (OpenCV-rendered, 15&nbsp;fps) and task buttons</li>
                     <li><strong>3D view:</strong> a viz node turns fleet state into TF + MarkerArray for RViz — dogs on the ground, drones at altitude with drop-lines and motion trails</li>
                   </ul>
+                  <p></p>
+
+                  <h5>Live Demonstration — RViz 3D View</h5>
+                  <video class="img-fluid d-block mx-auto" width="700" autoplay loop muted playsinline controls>
+                    <source src="assets/fleetmind/rviz_3d.webm" type="video/webm">
+                    Your browser does not support the video tag.
+                  </video>
+                  <p class="text-center"><em>RViz: dog (green cube) and two drones (blue discs) patrolling with motion trails, driven by the same fleet state</em></p>
                   <p></p>
 
                   <h4>Tools</h4>
